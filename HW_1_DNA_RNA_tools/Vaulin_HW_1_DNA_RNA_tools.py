@@ -83,10 +83,11 @@ ComplementRNA = {
     "c": "g", "C": "G"
 }
 
-command = read_command()
-
-if command == "exit":
-    print("Good luck!")
-else:
-    sequence = read_seq()
-    print(actions[command](sequence))
+while True:
+    command = read_command()
+    if command == "exit":
+        print("Good luck!")
+        break
+    else:
+        sequence = read_seq()
+        print(actions[command](sequence))
