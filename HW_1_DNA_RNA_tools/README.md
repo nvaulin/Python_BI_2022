@@ -1,5 +1,5 @@
 # DNA/RNA tools
-### Homework 1 BI Python course solution
+### Homework 1 [BI](https://bioinf.me/) Python course solution
 > *by* Nikita Vaulin, Skoltech <br />
 > Nikita.Vaulin@skoltech.ru
 
