@@ -55,7 +55,8 @@ actions = {
     'reverse': reverse,
     'complement': complement,
     'reverse complement': reverse_complement,
-    'exit': exit
+    'exit': exiting
+    ':q': exiting
 }
 
 DNA = {"A", "T", "G", "C"}
@@ -85,7 +86,7 @@ ComplementRNA = {
 
 while True:
     command = read_command()
-    if command == "exit":
+    if command == "exit" or command == ":q":
         print("Good luck!")
         break
     else:
