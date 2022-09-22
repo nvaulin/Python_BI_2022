@@ -55,8 +55,8 @@ actions = {
     'reverse': reverse,
     'complement': complement,
     'reverse complement': reverse_complement,
-    'exit': exiting,
-    ':q': exiting
+    'exit': exit,
+    ':q': exit
 }
 
 DNA = {"A", "T", "G", "C"}
