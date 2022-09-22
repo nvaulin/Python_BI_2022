@@ -55,7 +55,7 @@ actions = {
     'reverse': reverse,
     'complement': complement,
     'reverse complement': reverse_complement,
-    'exit': exiting
+    'exit': exiting,
     ':q': exiting
 }
 
