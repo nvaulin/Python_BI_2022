@@ -83,8 +83,8 @@ def main(input_fastq, output_file_prefix,
 
     `gc_bounds` = 66 means `gc_bounds` = (0, 66)
 
-    :param input_fastq: Path to input .fastq file
-    :param output_file_prefix: Output file name prefix
+    :param input_fastq: path to input .fastq file
+    :param output_file_prefix: output file name prefix
     :param gc_bounds: upper and (optionally) lower  borders of read's GC content
     :param length_bounds: upper and (optionally) lower borders of read's length
     :param quality_threshold: lower border of reads quality
