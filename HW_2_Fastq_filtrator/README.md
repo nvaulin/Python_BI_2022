@@ -3,7 +3,7 @@
 > *by* Nikita Vaulin, Skoltech <br />
 > Nikita.Vaulin@skoltech.ru
 
-Theese FastQ Filtrator allow to filter data from input .fastq files by GC content, length and quality. 
+This FastQ Filtrator allows to filter data from input .fastq files by GC content, length and quality. 
 Reads passed the filtering are saved into new *_passed.fastq file and, if *save_filtered* parameter is set to True, filtered reads are saved into *_failed.fastq file.
 
 
