@@ -59,29 +59,32 @@ actions = {
     ':q': exit
 }
 
-DNA = {"A", "T", "G", "C"}
-RNA = {"A", "U", "G", "C"}
+DNA = {"A", "T", "G", "C", "N"}
+RNA = {"A", "U", "G", "C", "N"}
 
 TranscriptDict = {
     "a": "a", "A": "A",
     "t": "u", "T": "U",
     "u": "t", "U": "T",
     "g": "g", "G": "G",
-    "c": "c", "C": "C"
+    "c": "c", "C": "C",
+    "n": "n", "N": "N"
 }
 
 ComplementDNA = {
     "a": "t", "A": "T",
     "t": "a", "T": "A",
     "g": "c", "G": "C",
-    "c": "g", "C": "G"
+    "c": "g", "C": "G",
+    "n": "n", "N": "N"
 }
 
 ComplementRNA = {
     "a": "u", "A": "U",
     "u": "a", "U": "A",
     "g": "c", "G": "C",
-    "c": "g", "C": "G"
+    "c": "g", "C": "G",
+    "n": "n", "N": "N"
 }
 
 while True:
@@ -91,4 +94,6 @@ while True:
         break
     else:
         sequence = read_seq()
+        if command == "transcribe" and is_rna(sequence):
+            print("You've entered RNA sequence, assume you're asking for reverse transcription")
         print(actions[command](sequence))
