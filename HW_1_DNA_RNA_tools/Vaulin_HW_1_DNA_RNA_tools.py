@@ -94,6 +94,6 @@ while True:
         break
     else:
         sequence = read_seq()
-        if command == "transcribe" and is_rna(sequence):
+        if command == "transcribe" and not is_dna(sequence):
             print("You've entered RNA sequence, assume you're asking for reverse transcription")
         print(actions[command](sequence))
