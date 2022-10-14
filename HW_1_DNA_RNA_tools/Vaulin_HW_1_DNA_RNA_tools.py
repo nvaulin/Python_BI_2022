@@ -21,10 +21,7 @@ def is_dna(seq):
 
 
 def is_rna(seq):
-    for nucleotide in set(seq.upper()):
-        if nucleotide not in RNA:
-            return False
-    return True
+    return set(seq.upper()) <= RNA
 
 
 def transcribe(seq):
