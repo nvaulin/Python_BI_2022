@@ -17,10 +17,7 @@ def read_seq():
 
 
 def is_dna(seq):
-    for nucleotide in set(seq.upper()):
-        if nucleotide not in DNA:
-            return False
-    return True
+    return set(seq.upper()) <= DNA
 
 
 def is_rna(seq):
