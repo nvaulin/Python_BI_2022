@@ -1,12 +1,15 @@
 import numpy as np
 
 if __name__ == "__main__":
-    # First array
-    array_one = np.ones(10)
+    # First array - let's start from basic 10 ones
+    ones_1 = np.ones(10, dtype=int)
+    ones_2 = np.zeros(10, dtype=int) + 1
+    ones_3 = np.array([10] * 10) - 9
+    ones_4 = np.array([10] * 10) ** 0
+    ones_5 = np.array([[1] * 5] * 2).ravel()
+    ones_6 = np.array(np.array([[[[[[[[[[1]]]]]]]]]]).shape)
 
-    # Second array
-
-    # Third array - 8x8 chessboard
+    # Second array - 8x8 chessboard
     chessboard_1 = np.zeros((8, 8), dtype=int)
     chessboard_1[1::2, ::2], chessboard_1[::2, 1::2] = 1, 1
 
@@ -18,5 +21,18 @@ if __name__ == "__main__":
 
     chessboard_3 = np.tile(np.array([[0, 1], [1, 0]]), (4, 4))
 
-    print((chessboard_1 == chessboard_2).all() and (chessboard_2 == chessboard_3).all())
-    print(chessboard_1)  # Checkig all 3 is equal and printing only one
+    # third array - We need to build a ziggurat!
+    ziggurat_1 = np.array([[0, 0, 0, 0, 0], [0, 1, 1, 1, 0], [0, 1, 2, 1, 0], [0, 1, 1, 1, 0], [0, 0, 0, 0, 0]])
+
+    ziggurat_2 = np.zeros(12, dtype=int)
+    ziggurat_2[-6:-3:], ziggurat_2[-1::] = 1, 1
+    ziggurat_2 = np.concatenate((ziggurat_2, [2], ziggurat_2[::-1])).reshape(5, 5)
+
+    ziggurat_3 = np.ones([5, 5], dtype=int) - np.vander([0] * 5, 5, 5) - np.vander([0] * 5, 5, 0)
+    ziggurat_3[[0, -1]] = 0
+    ziggurat_3[2][2] = 2
+
+    F = np.fromfunction(np.minimum, (5, 5))
+    FR = np.rot90(F, k=2)
+    T, TR = np.rot90(np.tri(5)), np.rot90(np.tri(5), k=3)
+    ziggurat_4 = np.round(np.multiply(F, T + 1) * np.multiply(FR, TR + 1) / 8 + 0.1, 0).astype(np.int32)
