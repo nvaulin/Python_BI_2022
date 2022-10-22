@@ -2,24 +2,24 @@ import numpy as np
 
 
 def matrix_multiplication(a, b):
-    '''
+    """
     Takes 2 matrices, multiplies them according to the
     rules of the matrix product, gives the resulting matrix
 
     :param a: 2D np.array with (x,y) shape
     :param b: 2D np.array with (y,z) shape
     :return: 2D np.array with (x,z) shape
-    '''
+    """
     return np.matmul(a, b)
 
 
 def multiplication_check(m_list):
-    '''
+    """
     Takes a list of matrices, and returns True if they can be multiplied
     in the order they appear in the list, and False if they can't be multiplied
     :param m_list: list of np.arrays
     :return: bool
-    '''
+    """
     for i in range(len(m_list) - 1):
         a = m_list[i]
         b = m_list[i + 1]
@@ -29,7 +29,7 @@ def multiplication_check(m_list):
 
 
 def multiply_matrices(m_list):
-    '''
+    """
     Takes a list of matrices, and returns the result
     of their consecutive multiplication if it can be obtained
     (according to the rules of the matrix product),
@@ -37,7 +37,7 @@ def multiply_matrices(m_list):
 
     :param m_list: list of 2D np.arrays
     :return: 2D np.array or None
-    '''
+    """
     if multiplication_check(m_list):
         return np.linalg.multi_dot(m_list)
     else:
@@ -45,7 +45,7 @@ def multiply_matrices(m_list):
 
 
 def compute_2d_distance(a, b):
-    '''
+    """
     Takes 2 one-dimensional arrays with a pair of elements
     (as the coordinates of a point on the plane)
     and calculates the Euclidean distance between them.
@@ -59,13 +59,13 @@ def compute_2d_distance(a, b):
     :param a: 1D np.array with 2 elements
     :param b: 1D np.array with 2 elements
     :return: float
-    '''
+    """
     return compute_multidimensional_distance(a, b)
 
 
 def compute_multidimensional_distance(a, b):
-    '''
-        Takes 2 one-dimensional arrays with any (equal) number of elements
+    """
+    Takes 2 one-dimensional arrays with any (equal) number of elements
     (as the coordinates in multidimensional space)
     and calculates the Euclidean distance between them.
 
@@ -76,19 +76,19 @@ def compute_multidimensional_distance(a, b):
     :param a: 1D np.array with n elements
     :param b: 1D np.array with n elements
     :return: float
-    '''
+    """
     return np.sqrt(np.sum(np.square(a - b)))
 
 
 def compute_pair_distances(a):
-    '''
+    """
     Takes a 2D array as a set of rows and calculates
     the matrix of pairwise distances (in terms of Euclidean distance)
     between rows and returns it.
 
     :param a: 2D np.array
     :return: 2D np.array
-    '''
+    """
     a_rsh = a.reshape(a.shape[0], 1, a.shape[1])
     res_matr = np.sqrt(np.einsum('ijk, ijk->ij', a - a_rsh, a - a_rsh))
     return res_matr
@@ -126,7 +126,7 @@ if __name__ == "__main__":
     ziggurat_3[[0, -1]] = 0
     ziggurat_3[2][2] = 2
 
-    F = np.fromfunction(np.minimum, (5, 5))
-    FR = np.rot90(F, k=2)
-    T, TR = np.rot90(np.tri(5)), np.rot90(np.tri(5), k=3)
-    ziggurat_4 = np.round(np.multiply(F, T + 1) * np.multiply(FR, TR + 1) / 8 + 0.1, 0).astype(np.int32)
+    f = np.fromfunction(np.minimum, (5, 5))
+    fr = np.rot90(f, k=2)
+    t, tr = np.rot90(np.tri(5)), np.rot90(np.tri(5), k=3)
+    ziggurat_4 = np.round(np.multiply(f, t + 1) * np.multiply(fr, tr + 1) / 8 + 0.1, 0).astype(np.int32)
