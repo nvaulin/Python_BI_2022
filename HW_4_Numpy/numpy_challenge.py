@@ -1,5 +1,35 @@
 import numpy as np
 
+
+def matrix_multiplication(a, b):
+    return np.matmul(a, b)
+
+
+def multiplication_check(m_list):
+    for i in range(len(m_list) - 1):
+        A = m_list[i]
+        B = m_list[i + 1]
+        print(B)
+        if A.shape[1] != B.shape[0]:
+            return False
+    return True
+
+
+def multiply_matrices(m_list):
+    if multiplication_check(m_list):
+        return np.linalg.multi_dot(m_list)
+    else:
+        return None
+
+
+def compute_2d_distance(A, B):
+    return compute_multidimensional_distance(A, B)
+
+
+def compute_multidimensional_distance(A, B):
+    return np.sqrt(np.sum(np.square(A - B)))
+
+
 if __name__ == "__main__":
     # First array - let's start from basic 10 ones
     ones_1 = np.ones(10, dtype=int)
