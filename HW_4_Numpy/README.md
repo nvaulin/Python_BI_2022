@@ -19,6 +19,9 @@ The file `numpy_challenge.py` contains several functions for working with Numpy 
 
 
 Also it contains several examples of Numpy arrays creation. Feel free to check!
+
+The perfomance was tested with Python 3.9.10 
+
 ## Dependencies
 
 To use this functions the Numpy library is needed (the perfomance was tested with Numpy 1.23.4).
