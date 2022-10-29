@@ -47,7 +47,8 @@ def length_check(sequence, length_bounds):
 
 
 def quality_check(quality, quality_threshold, ascii_dict):
-    letters_scores = [ascii_dict[q] - 33 for q in quality]  # translate ASCII quality encoding into numeric
+    letters_scores = [ord(q) - 33 for q in quality]  # translate ASCII quality encoding into numeric
+
     length = len(letters_scores)
     if length == 0:
         return 0 >= quality_threshold
