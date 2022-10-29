@@ -96,7 +96,6 @@ def main(input_fastq, output_file_prefix,
     if not isinstance(length_bounds, tuple):
         length_bounds = (0, length_bounds)
 
-    ascii_dict = {chr(i): i for i in range(33, 74)}  # ascii dictionary for illumina reads quality decoding
     names, sequences, qualities = read_fastq(input_fastq)
 
     passed, filtered = reads_filter(sequences, qualities, gc_bounds, length_bounds, quality_threshold, ascii_dict)
