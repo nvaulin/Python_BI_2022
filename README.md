@@ -1,6 +1,5 @@
- Data wrangling and visualisation
-### Homework 5 [BI](https://bioinf.me/) Python course solution
+### [BI](https://bioinf.me/) Python course 
 > *by* Nikita Vaulin, Skoltech <br />
 > Nikita.Vaulin@skoltech.ru
 
-This is repo for BI HW5 about data wrangling with pandas and visualisation with matplotlib and seaborn
+This is repo for my homeworks within the BI python course fall 2022
