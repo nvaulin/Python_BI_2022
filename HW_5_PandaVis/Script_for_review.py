@@ -46,8 +46,9 @@ plt.plot();
 
 
 df_inter = df_gff.merge(df_bed, on='chromosome')
-df_inter = df_inter.query('start_x >= start_y and end_x <= end_y')
+df_inter = df_inter.query('start_x >= start_y +1 and end_x <= end_y + 1')
 df_inter
+# Here we added 1 to y coordinates since bed files are 0-based while gff files are 1-based
 
 
 
