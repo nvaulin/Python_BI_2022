@@ -12,12 +12,12 @@ def file_scanner(filename: str, pattern: str, as_set: bool = True, returning: bo
             *filename* (str): name of a file to search in (can be path as well)\n
             *pattern* (str): pattern to search\n
             *as_set* (bool): whether to convert results to a set, default = True\n
-            *returning* (bool): whether to return the list of found matches, default = True\n
-            *writing* (bool): whether to write to a file the list of found matches, default = False\n
+            *returning* (bool): whether to return found matches, default = True\n
+            *writing* (bool): whether to write found matches to a file, default = False\n
             *outname* (str): name of a file to write in (can be path as well)
 
         Returns:
-            *set[str]*: set of found patterns
+            *set[str]*: set of found patterns (can be a list)
     """
     pattern = re.compile(pattern)
     with open(filename, 'r') as file:
@@ -45,12 +45,12 @@ def ftp_finder(filename: str,
             *filename (str): name of a file to search in (can be path as well)
 
         Optional parameters:
-            *returning* (bool): whether to return the list of found matches\n
-            *writing* (bool): whether to write to a file the list of found matches\n
+            *returning* (bool): whether to return found matches\n
+            *writing* (bool): whether to write found matches to a file\n
             *outname* (str): name of a file to write in (can be path as well)
 
         Returns:
-            *list[str]*: list of found ftp-links
+            *set[str]*: set of found ftp-links (can be list)
     """
     return file_scanner(filename, r"\bftp[\w\d\\/\._#]+?\s", returning, writing, outname=outname)
 
@@ -135,14 +135,18 @@ def words_extractor(filename: str, word_contains: str = '', as_set: bool = True,
     return words_found
 
 
-def exclamations_extractor(filename: str) -> set:
-    sentence_pattern = fr'([A-Z](?:[^[\.])*?!)'
-    return file_scanner(filename, sentence_pattern)
+def sentences_extractor(filename: str = None, text: str = None, stop_sign: str = '(?:[\.?!]|.$)') -> list:
+    sentence_pattern = fr'([A-ZА-Я](?:[^[\.])*?{stop_sign})'
+    sentences = []
+    if filename is not None:
+        sentences.extend(file_scanner(filename, sentence_pattern, as_set=False))
+    if text is not None:
+        sentences.extend(re.findall(sentence_pattern, text))
+    return sentences
 
 
 def words_len_distr_hist(filename: str):
     words = words_extractor(filename, as_set=True)
-    print('inhuman' in words)
     words_lens = list(map(len, words))
     max_len = max(words_lens)
 
@@ -157,9 +161,43 @@ def words_len_distr_hist(filename: str):
     plt.savefig(path)
 
 
+def transsalter(text: str) -> str:
+    vowels_eng = 'aeiouy'
+    vowels_ru = 'ауоыиэяюёе'
+    text = re.sub(fr'([{vowels_eng}])', fr'\1s\1', text)
+    text = re.sub(fr'([{vowels_ru}])', fr'\1с\1', text)
+    return text
+
+
+def sentence_word_count(sentence: str) -> int:
+    return len(re.findall(r'\s', sentence)) + 1
+
+
+def extract_n_word_sentences(n: int, filename: str = None, text: str = None) -> list:
+    sentences = sentences_extractor(filename=filename, text=text)
+    good_sentences = list(filter(lambda x: sentence_word_count(x) == n, sentences))
+    return good_sentences
+
+
 if __name__ == '__main__':
+    # 1. FTP-links parser
     ftp_finder('data/1_references')
+
+    # 2. Numbers extraction
     numbers = numbers_extractor('data/2_2430AD', print_as_is=True)
+
+    # 3. Words with 'a' extraction
     words_with_a = words_extractor('data/2_2430AD', word_contains='[aA]')
-    exclamations = exclamations_extractor('data/2_2430AD')
+
+    # 4. Exlamation sentances extractor
+    exclamations = sentences_extractor('data/2_2430AD', '!')
+
+    # 5. Unique word distribution (saves hist to .png)
     words_len_distr_hist('data/2_2430AD')
+
+    # 6. Translation to salted language
+    salted_text = transsalter('Сьешь еще этих мягких французских булок and drink tea')
+
+    # 7. Extraction sentences with n words
+    n_word_sentences_from_file = extract_n_word_sentences(filename='data/2_2430AD', n=3)
+    n_word_sentences_from_text = extract_n_word_sentences(text='Здесь три слова. Здесь тоже три', n=3)
