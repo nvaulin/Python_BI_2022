@@ -141,17 +141,20 @@ def exclamations_extractor(filename: str) -> set:
 
 
 def words_len_distr_hist(filename: str):
-    words = words_extractor(filename, as_set=False)
+    words = words_extractor(filename, as_set=True)
     print('inhuman' in words)
     words_lens = list(map(len, words))
     max_len = max(words_lens)
-    plt.hist(words_lens, color='blue', edgecolor='black', align='right', bins=max_len)
+
+    plt.figure()
+    plt.hist(words_lens, color='blue', edgecolor='black', align='right', bins=max_len, density=True)
     plt.xticks(range(1, max_len + 1))
     plt.xlabel('Length of word')
     plt.ylabel('Amount')
     plt.title('Histogram of word lengths distribution')
-
-    plt.show()
+    name = re.split(r'[\\/]', filename)[-1]
+    path = os.path.join("pictures", f'Words_lengths_distribution_{name}.png')
+    plt.savefig(path)
 
 
 if __name__ == '__main__':
