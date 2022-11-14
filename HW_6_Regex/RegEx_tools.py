@@ -1,15 +1,17 @@
 import os.path
 import re
+import matplotlib.pyplot as plt
 
 
-def file_scanner(filename: str, pattern: str, returning: bool = True,
+def file_scanner(filename: str, pattern: str, as_set: bool = True, returning: bool = True,
                  writing: bool = False, outname: str = 'file_scanner_ouput.txt') -> set:
     """
     Find any patterns in a particular file. Can return them or write into new a file.
 
         Parameters:
             *filename* (str): name of a file to search in (can be path as well)\n
-            *pattern* (str): pattern to search, ftp-link pattern by default\n
+            *pattern* (str): pattern to search\n
+            *as_set* (bool): whether to convert results to a set, default = True\n
             *returning* (bool): whether to return the list of found matches, default = True\n
             *writing* (bool): whether to write to a file the list of found matches, default = False\n
             *outname* (str): name of a file to write in (can be path as well)
@@ -23,7 +25,8 @@ def file_scanner(filename: str, pattern: str, returning: bool = True,
         for line in file:
             line = line.strip()
             matches.extend(re.findall(pattern, line))
-    matches = set(matches)
+    if as_set:
+        matches = set(matches)
     if writing:
         with open(outname, 'w') as output_file:
             for match in matches:
@@ -49,7 +52,7 @@ def ftp_finder(filename: str,
         Returns:
             *list[str]*: list of found ftp-links
     """
-    return file_scanner(filename, r"\bftp[\w\d\\/\._#]+?\s", returning, writing, outname)
+    return file_scanner(filename, r"\bftp[\w\d\\/\._#]+?\s", returning, writing, outname=outname)
 
 
 def numbers_extractor(filename: str, is_float: bool = True, is_exponential: bool = True,
@@ -61,7 +64,7 @@ def numbers_extractor(filename: str, is_float: bool = True, is_exponential: bool
     provided a translation of a human-format string into a regex-format. If many, please, provide separators as regex
     collection [].
 
-    If both separators specified as '\.', only the last '.' considered as a decimal separator
+    If both separators specified as '\.' only the last '.' considered as a decimal separator.
 
     *Examples*:
 
@@ -87,21 +90,29 @@ def numbers_extractor(filename: str, is_float: bool = True, is_exponential: bool
                   '.': r'\.'
                   }
 
+    # Convert human-written separators into regex notation
     if radix_sep in separators:
         radix_sep = separators[radix_sep]
     if decimal_sep in separators:
         decimal_sep = separators[decimal_sep]
 
-    basic_digits = r'(?:\d+)'
-    inner_parts = fr'(?:{radix_sep}\d+)*'
-    number_pattern = fr'[+-]?{basic_digits}{inner_parts}'
+    number_pattern = r'[+-]?(?:\d+)'
 
+    # Add radix inner parts if some radix specified
+    if radix_sep not in ['', None]:
+        inner_parts = fr'(?:{radix_sep}\d+)*'
+        number_pattern += inner_parts
+
+    # Add float ending for float numbers
     if is_float:
         float_ending = fr'(?:{decimal_sep}\d+)?'
         number_pattern += float_ending
+
+    # Add the same pattern as an exponential part for scientific notation
     if is_exponential:
         exponential_part = fr'(?:[eE]{number_pattern})?'
         number_pattern += exponential_part
+
     numbers_found = file_scanner(filename, number_pattern)
     if not print_as_is:
         if is_float:
@@ -111,10 +122,41 @@ def numbers_extractor(filename: str, is_float: bool = True, is_exponential: bool
     return numbers_found
 
 
-def words_extractor(filename: str, is_float: bool = True, is_exponential: bool = True,
-                    decimal_sep: str = '\.', radix_sep: str = '', print_as_is: bool = False) -> set:
+def words_extractor(filename: str, word_contains: str = '', as_set: bool = True,
+                    case_sensitive: bool = False, ) -> set:
+    word_pattern = fr'\b\w*{word_contains}\w*\b'
+    words_found = file_scanner(filename, word_pattern, as_set=as_set)
+    if not case_sensitive:
+        words_lowered = map(lambda x: x.lower(), words_found)
+        if as_set:
+            words_found = set(words_lowered)
+        else:
+            words_found = list(words_lowered)
+    return words_found
+
+
+def exclamations_extractor(filename: str) -> set:
+    sentence_pattern = fr'([A-Z](?:[^[\.])*?!)'
+    return file_scanner(filename, sentence_pattern)
+
+
+def words_len_distr_hist(filename: str):
+    words = words_extractor(filename, as_set=False)
+    print('inhuman' in words)
+    words_lens = list(map(len, words))
+    max_len = max(words_lens)
+    plt.hist(words_lens, color='blue', edgecolor='black', align='right', bins=max_len)
+    plt.xticks(range(1, max_len + 1))
+    plt.xlabel('Length of word')
+    plt.ylabel('Amount')
+    plt.title('Histogram of word lengths distribution')
+
+    plt.show()
 
 
 if __name__ == '__main__':
     ftp_finder('data/1_references')
-    print(numbers_extractor('data/2_2430AD', print_as_is=True))
+    numbers = numbers_extractor('data/2_2430AD', print_as_is=True)
+    words_with_a = words_extractor('data/2_2430AD', word_contains='[aA]')
+    exclamations = exclamations_extractor('data/2_2430AD')
+    words_len_distr_hist('data/2_2430AD')
