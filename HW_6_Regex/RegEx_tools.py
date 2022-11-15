@@ -17,7 +17,7 @@ def file_scanner(filename: str, pattern: str, as_set: bool = True, returning: bo
             *outname* (str): name of a file to write in (can be path as well)
 
         Returns:
-            *set[str]*: set of found patterns (can be a list)
+            set[str]: set of found patterns (can be a list)
     """
     pattern = re.compile(pattern)
     with open(filename, 'r') as file:
@@ -50,7 +50,7 @@ def ftp_finder(filename: str,
             *outname* (str): name of a file to write in (can be path as well)
 
         Returns:
-            *set[str]*: set of found ftp-links (can be list)
+            set[str]: set of found ftp-links (can be list)
     """
     return file_scanner(filename, r"\bftp[\w\d\\/\._#]+?\s", returning, writing, outname=outname)
 
@@ -84,7 +84,7 @@ def numbers_extractor(filename: str, is_float: bool = True, is_exponential: bool
                                 numerical data (with respect to is_float option)
 
         Returns:
-            *set[num]*: set of found numbers (set of float/integer numbers or strings if specified)
+            set[num]: set of found numbers (set of float/integer numbers or strings if specified)
     """
     separators = {' ': r'\s',
                   '.': r'\.'
@@ -124,6 +124,19 @@ def numbers_extractor(filename: str, is_float: bool = True, is_exponential: bool
 
 def words_extractor(filename: str, word_contains: str = '', as_set: bool = True,
                     case_sensitive: bool = False, ) -> set:
+    """
+    Extract words containing some pattern from a particular file. Also can be used just to extract the words.
+
+        Parameters:
+            *filename* (str): name of a file to search in (can be path as well)\n
+            *word_contains* (str): pattern to search in words (default '' not to filter words)\n
+            *as_set* (bool): whether to convert results to a set, default = True\n
+            *case_sensitive* (bool): whether to consider words with capital and small letters
+                                     as different, default = True
+
+        Returns:
+            set[str]: set of found patterns (can be a list)
+    """
     word_pattern = fr'\b\w*{word_contains}\w*\b'
     words_found = file_scanner(filename, word_pattern, as_set=as_set)
     if not case_sensitive:
@@ -136,6 +149,19 @@ def words_extractor(filename: str, word_contains: str = '', as_set: bool = True,
 
 
 def sentences_extractor(filename: str = None, text: str = None, stop_sign: str = '(?:[\.?!]|.$)') -> list:
+    """
+    Extract the whole sentences from a particular file or text.
+
+        Parameters:
+            *filename* (str): name of a file to search in (can be path as well)\n
+            *text* (str): single-line text to search in\n
+            *word_contains* (str): pattern to search in words (default '' not to filter words)\n
+            *stop_sign* (bool): which symbols to consider as a sentence terminator (by default there are
+                                a '.', '!', '?' or l\n
+
+        Returns:
+            list[str]: list of found sentences
+    """
     sentence_pattern = fr'([A-ZА-Я](?:[^[\.])*?{stop_sign})'
     sentences = []
     if filename is not None:
@@ -146,6 +172,18 @@ def sentences_extractor(filename: str = None, text: str = None, stop_sign: str =
 
 
 def words_len_distr_hist(filename: str):
+    """
+    Extract unique words from a particular file and plot histogram of their lengths distribution
+
+        Parameters:
+            *filename* (str): name of a file to search in (can be path as well)\n
+
+        Output:
+            Saves a .png plot file to the 'pictures' subdirectory
+
+        Returns:
+            None
+    """
     words = words_extractor(filename, as_set=True)
     words_lens = list(map(len, words))
     max_len = max(words_lens)
@@ -162,6 +200,16 @@ def words_len_distr_hist(filename: str):
 
 
 def transsalter(text: str) -> str:
+    """
+    Translate russian and english text to salted language.
+    Unsupported types of languages will be return without any changes.
+
+        Parameters:
+            *text* (str): an english or russian text to translate\n
+
+        Returns:
+            str: translated text.
+    """
     vowels_eng = 'aeiouy'
     vowels_ru = 'ауоыиэяюёе'
     text = re.sub(fr'([{vowels_eng}])', fr'\1s\1', text)
@@ -169,13 +217,34 @@ def transsalter(text: str) -> str:
     return text
 
 
-def sentence_word_count(sentence: str) -> int:
-    return len(re.findall(r'\s', sentence)) + 1
+def text_word_count(text: str) -> int:
+    """
+    Count number words in a string
+
+        Parameters:
+            *text* (str): a text to count words\n
+
+        Returns:
+            int: number of words
+    """
+
+    return len(re.findall(r'\b', text))//2
 
 
 def extract_n_word_sentences(n: int, filename: str = None, text: str = None) -> list:
+    """
+    Filter sentences in text or file by number of words and retirns list of sententes with a given number of words.
+
+        Parameters:
+            *n* (int): a number of words
+            *filename* (str): name of a file to process (can be path as well)\n
+            *text* (str): a text string to process\n
+
+        Returns:
+            list[str]: number of words
+    """
     sentences = sentences_extractor(filename=filename, text=text)
-    good_sentences = list(filter(lambda x: sentence_word_count(x) == n, sentences))
+    good_sentences = list(filter(lambda x: text_word_count(x) == n, sentences))
     return good_sentences
 
 
