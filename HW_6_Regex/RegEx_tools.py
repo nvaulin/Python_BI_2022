@@ -137,7 +137,7 @@ def words_extractor(filename: str, word_contains: str = '', as_set: bool = True,
         Returns:
             set[str]: set of found patterns (can be a list)
     """
-    word_pattern = fr'\b\w*{word_contains}\w*\b'
+    word_pattern = fr'\b[\w\']*{word_contains}[\w\']*\b'
     words_found = file_scanner(filename, word_pattern, as_set=as_set)
     if not case_sensitive:
         words_lowered = map(lambda x: x.lower(), words_found)
