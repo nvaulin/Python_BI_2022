@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 
 def file_scanner(filename: str, pattern: str, as_set: bool = True, returning: bool = True,
-                 writing: bool = False, outname: str = 'file_scanner_ouput.txt') -> set:
+                 writing: bool = False, outname: str = 'file_scanner_output.txt') -> set:
     """
     Find any patterns in a particular file. Can return them or write into new a file.
 
@@ -208,7 +208,7 @@ def transsalter(text: str) -> str:
             *text* (str): an english or russian text to translate\n
 
         Returns:
-            str: translated text.
+            str: translated text
     """
     vowels_eng = 'aeiouy'
     vowels_ru = 'ауоыиэяюёе'
@@ -228,7 +228,7 @@ def text_word_count(text: str) -> int:
             int: number of words
     """
 
-    return len(re.findall(r'\b', text))//2
+    return len(re.findall(r'\b', text)) // 2
 
 
 def extract_n_word_sentences(n: int, filename: str = None, text: str = None) -> list:
