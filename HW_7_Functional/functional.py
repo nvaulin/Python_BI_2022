@@ -86,7 +86,7 @@ def func_chain(*funcs):
     return pipe
 
 
-# Интеграция func_chain в 1 задание
+# Интеграция func_chain в задание 1
 def sequential_map_2(*args):
     args = list(args)
     container = args.pop()
