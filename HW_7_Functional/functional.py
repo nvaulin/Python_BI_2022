@@ -44,7 +44,6 @@ def func_chain(*funcs):
     return pipe
 
 
-
 # Интеграция func_chain в 1 задание
 def sequential_map_2(*args):
     args = list(args)
@@ -53,10 +52,27 @@ def sequential_map_2(*args):
     return pipe(*container)
 
 
+def multiple_partial(*args, **kwargs):
+    funcs, arguments = [], []
+
+    # Separation of *args into function and arguments for functions
+    for arg in args:
+        (funcs if callable(arg) else arguments).append(arg)
+
+    def multitool(*args):
+        results = []
+        arguments.extend(list(args))
+        for f in funcs:
+            results.append(f(*arguments, **kwargs))
+        return results
+
+    return multitool
 
 
-def multiple_partial():
-    pass
+my_print = multiple_partial(print, "Hello", sep=", ", end=".....")
+print(my_print("Username", "this is functools tutorial"))
+my_stat = multiple_partial(np.mean, np.max, np.sum, axis=1)
+print(my_stat([[1, 2], [1, 2]]))
 
 
 def my_print():
