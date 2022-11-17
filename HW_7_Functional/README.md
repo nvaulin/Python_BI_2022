@@ -25,7 +25,7 @@ The tools were tested with *python 3.10.8*.
 To run tools download `functional.py` file. For Linux:
 
 ```bash
-wget -c https://raw.githubusercontent.com/nvaulin/Python_BI_2022/HW_6_Regex/HW_6_Regex/RegEx_tools.py
+wget -c https://raw.githubusercontent.com/nvaulin/Python_BI_2022/HW_7_Functional_programming/HW_7_Functional/functional.py
 ```
 
 ## Usage
