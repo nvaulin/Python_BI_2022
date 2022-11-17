@@ -1,6 +1,4 @@
 import sys
-import numpy as np
-
 
 # Дополнительная функция для заданий 1 и 2 т.к. их две функции были слишком похожи чтобы не объединить в одну
 def sequential_apply(method, *args):
@@ -13,11 +11,34 @@ def sequential_apply(method, *args):
 
 # Задание 1
 def sequential_map(*args):
+    """
+    The function takes several functions and a container with data,
+    after which it sequentially applies the functions to each element of the container separately
+
+    Input:
+        python functions \n
+        container of objects
+
+    Output:
+        container of objects of sequential functions application
+    """
     return sequential_apply(map, *args)
 
 
 # Задание 2
 def consensus_filter(*args):
+    """
+The function takes several filtering functions (bool-outputing) and a container with data,
+after which it sequentially applies the filters to each element of the container and returns
+a values passed all the filterings
+
+Input:
+    python bool-outputing functions \n
+    container of objects
+
+Output:
+    container of objects passed all the filterings
+"""
     return sequential_apply(filter, *args)
 
 
@@ -69,11 +90,9 @@ def multiple_partial(*args, **kwargs):
     return multitool
 
 
-my_print = multiple_partial(print, "Hello", sep=", ", end=".....")
-print(my_print("Username", "this is functools tutorial"))
-my_stat = multiple_partial(np.mean, np.max, np.sum, axis=1)
-print(my_stat([[1, 2], [1, 2]]))
-
-
-def my_print():
-    pass
+def my_print(*objects, sep=' ', end='\n', file=None):
+    objetcs = list(map(str, objects))
+    output = sep.join(objetcs) + end
+    if file:
+        sys.stdout = open(file, "w")
+    sys.stdout.write(output)
