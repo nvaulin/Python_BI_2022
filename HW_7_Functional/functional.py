@@ -1,5 +1,6 @@
 import sys
 
+
 # Дополнительная функция для заданий 1 и 2 т.к. их две функции были слишком похожи чтобы не объединить в одну
 def sequential_apply(method, *args):
     args = [*args][::-1]
@@ -44,6 +45,17 @@ Output:
 
 # Задание 3
 def conditional_reduce(func_1, func_2, container):
+    """
+    Applies filter and 2-valued 1-value-returning function to reduce a container.
+
+    Input:
+        python filtering function\n
+        python reducing function (takes 2 values, returns 1)\n
+        container
+
+    Output:
+        single value
+    """
     container = list(filter(func_1, container))[::-1]
     while len(container) > 1:
         container.append(func_2(container.pop(), container.pop()))
@@ -52,6 +64,15 @@ def conditional_reduce(func_1, func_2, container):
 
 # Задаение 4
 def func_chain(*funcs):
+    """
+    Takes any number of functions and turns them into a single pipeline function
+
+    Input:
+        several python functions
+
+    Output:
+        single function
+    """
     funcs = [*funcs][::-1]
 
     def pipe(*args):
@@ -74,15 +95,18 @@ def sequential_map_2(*args):
 
 
 def multiple_partial(*args, **kwargs):
+    """
+    Takes several functions and arguments and passes the given arguments to the functions in advance.
+    When called, all functions will be updated with new arguments and the results of the functions will be eaten out as a list
+    """
     funcs, arguments = [], []
-
     # Separation of *args into function and arguments for functions
     for arg in args:
         (funcs if callable(arg) else arguments).append(arg)
 
-    def multitool(*args):
+    def multitool(*_args):
         results = []
-        arguments.extend(list(args))
+        arguments.extend(list(_args))
         for f in funcs:
             results.append(f(*arguments, **kwargs))
         return results
@@ -91,8 +115,23 @@ def multiple_partial(*args, **kwargs):
 
 
 def my_print(*objects, sep=' ', end='\n', file=None):
-    objetcs = list(map(str, objects))
-    output = sep.join(objetcs) + end
+    """
+    The function allows you to display variables in the console
+    (or in a file, if specified) without calling the print function!
+
+    Input:
+        several objects to display
+
+    Parameters:
+        sep (str): separator of objects
+        end (str): ending symbol
+        file (str): path to file to write (optional)
+
+     Output:
+        string of given variables in standard output (console or file)
+    """
+    objects = list(map(str, objects))
+    output = sep.join(objects) + end
     if file:
         sys.stdout = open(file, "w")
     sys.stdout.write(output)
