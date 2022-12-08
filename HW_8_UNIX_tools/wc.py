@@ -14,7 +14,7 @@ def parse_wc_args():
     parser.add_argument('-w', '--words', action='store_true', help='print the character counts', required=False)
     parser.add_argument('-c', '--bytes', action='store_true', help='print the byte counts', required=False)
     parser.add_argument('input_data', type=argparse.FileType('r'), default=sys.stdin, nargs='?',
-                        help='Read input from the file')
+                        help='read input from the file')
     return parser.parse_args()
 
 
