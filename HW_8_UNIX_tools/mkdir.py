@@ -22,8 +22,8 @@ if __name__ == '__main__':
 
     for directory in args.directory:
         try:
-            Path.mkdir(directory, parents=args.parent, exist_ok=False)
+            Path(directory).mkdir(parents=args.parent, exist_ok=False)
         except FileNotFoundError:
-            sys.stderr.write(f'mkdir: cannot create directory \'{directory}\': No such file or directory ')
+            sys.stderr.write(f'mkdir: cannot create directory \'{directory}\': No such file or directory\n')
         except FileExistsError:
-            sys.stderr.write(f'mkdir: cannot create directory \'{directory}\': File exists ')
+            sys.stderr.write(f'mkdir: cannot create directory \'{directory}\': File exists \n')
