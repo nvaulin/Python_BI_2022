@@ -7,7 +7,7 @@ import argparse
 
 def parse_ln_args():
     parser = argparse.ArgumentParser(
-        usage='ln.py [OPTION] [TARGET] [LINK_NAME]]',
+        usage='ln.py [OPTION] [TARGET] [LINK_NAME]',
         description='''Create hard links by default, symbolic links with --symbolic.
         By default, each destination (name of new link) should not already exist.
         When creating hard links, each TARGET must exist.  Symbolic links

@@ -12,14 +12,14 @@ def parse_ls_args():
 
     parser.add_argument('-a', '--all', action='store_true', help='do not ignore entries starting with .',
                         required=False)
-    parser.add_argument('dir', type=str, default='.', nargs='?',
+    parser.add_argument('directory', type=str, default='.', nargs='?',
                         help='directory which content to display ("." by default)')
     return parser.parse_args()
 
 
 if __name__ == '__main__':
     args = parse_ls_args()
-    directory = args.dir
+    directory = args.directory
 
     try:
         dir_content = list(sorted(os.listdir(directory)))
