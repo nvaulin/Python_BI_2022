@@ -57,7 +57,7 @@ To get more information about the particular script, run:
 
 The tools also can be used in pipelines:
 ```bash
-./tool_1.py input_file | ./tools_2.py > output_file
+./tool_1.py input_file | ./tool_2.py > output_file
 ```
 
 ### Troubleshooting
