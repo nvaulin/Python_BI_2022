@@ -13,7 +13,7 @@ def parse_mkdir_args():
 
     parser.add_argument('-p', '--parent', action='store_true', help='make symbolic links instead of hard links',
                         required=False)
-    parser.add_argument('directory', default=None, nargs='*', help='')
+    parser.add_argument('directory', default=None, nargs='*', help='name of the new directory')
     return parser.parse_args()
 
 

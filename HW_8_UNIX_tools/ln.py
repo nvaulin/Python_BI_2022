@@ -16,8 +16,8 @@ def parse_ln_args():
 
     parser.add_argument('-s', '--symbolic', action='store_true', help='make symbolic links instead of hard links',
                         required=False)
-    parser.add_argument('target', help='', nargs='?')
-    parser.add_argument('link_name', help='', nargs='?')
+    parser.add_argument('target', help='file or directory as a link target', nargs='?')
+    parser.add_argument('link_name', help='name of the link', nargs='?')
     return parser.parse_args()
 
 
