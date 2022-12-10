@@ -8,7 +8,7 @@ import argparse
 def parse_ls_args():
     parser = argparse.ArgumentParser(
         usage='ls.py [OPTION] [FILE]',
-        description='''List information about the FILEs (the current directory by default). Sort entries alphabetically''')
+        description='''List the FILEs (the current directory by default). Sort entries alphabetically''')
 
     parser.add_argument('-a', '--all', action='store_true', help='do not ignore entries starting with .',
                         required=False)
