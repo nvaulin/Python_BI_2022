@@ -55,6 +55,11 @@ To get more information about the particular script, run:
 ./script.py --help
 ```
 
+The tools also can be used in pipelines:
+```bash
+./tool_1.py input_file | ./tools_2.py > output_file
+```
+
 ### Troubleshooting
 
 - *The script is not executable*:
