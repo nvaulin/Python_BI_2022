@@ -30,10 +30,10 @@ To get UNIX tools download the particular tool you need or the whole  `HW_8_UNIX
 To download the tool, use the raw-link. For example, for Linux:
 
 ```bash
-wget https://raw.githubusercontent.com/nvaulin/Python_BI_2022/HW_6_Regex/HW_6_Regex/RegEx_tools.py
+wget https://raw.githubusercontent.com/nvaulin/Python_BI_2022/HW_8_UNIX_tools/HW_8_UNIX_tools/ln.py
 ```
 
-To get the whole folder, download it by the [link](https://download-directory.github.io/?url=https%3A%2F%2Fgithub.com%2Fnvaulin%2FPython_BI_2022%2Ftree%2FHW_6_Regex%2FHW_6_Regex) as a zip archive and unzip it. 
+To get the whole folder, download it by the [link](https://download-directory.github.io/?url=https%3A%2F%2Fgithub.com%2Fnvaulin%2FPython_BI_2022%2Ftree%2FHW_8_UNIX_tools%2FHW_8_UNIX_tools) as a zip archive and unzip it. 
 For example, for Windows use [WinRAR](https://www.win-rar.com/start.html?&L=4). For Linux:
 
 ```bash
