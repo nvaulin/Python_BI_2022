@@ -10,7 +10,8 @@ import seaborn as sns
 
 def read_gff(file: str) -> pd.DataFrame:
     cols = ["chromosome", "source", "type", "start", "end", "score", "strand", "phase", "attributes"]
-    df = pd.read_csv(file, sep='\t', skiprows=1, header=None)
+    df = pd.read_csv(file, sep='\t', comment="#", header=None)
+
     df.columns = cols
     return df
 
