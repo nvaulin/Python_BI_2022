@@ -52,7 +52,7 @@ def ftp_finder(filename: str,
         Returns:
             set[str]: set of found ftp-links (can be list)
     """
-    return file_scanner(filename, r"\bftp[\w\d\\/\._#]+?\s", returning, writing, outname=outname)
+    return file_scanner(filename, r"\bftp[\w\d\\/\._#]+?\s", returning=returning, writing=writing, outname=outname)
 
 
 def numbers_extractor(filename: str, is_float: bool = True, is_exponential: bool = True,
